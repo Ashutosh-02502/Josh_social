@@ -27,13 +27,6 @@ public class UserController {
 	UserServices userServices;
   
 	
-	//CREATE-NEW-USER
-	@PostMapping("/user/insert")
-	public User createUser(@RequestBody User user) {
-		
-		User savedUser = userServices.resisterUser(user);		
-		return savedUser;
-	}
 	
 	//GET-ALL-USERS
 	@GetMapping("/api/users")

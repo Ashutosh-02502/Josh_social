@@ -1,7 +1,6 @@
 package com.josh.config;
 
 import java.io.IOException;
-import java.net.Authenticator;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,8 +39,6 @@ public class jwtValidator extends OncePerRequestFilter {
 			} catch (Exception e) {
 				throw new BadCredentialsException("Invalid token.....");
 			}
-		}else {
-			throw new BadCredentialsException("Jwt Tocken Not Found, Provide A Valid Token");
 		}
 		
 		filterChain.doFilter(request, response);
