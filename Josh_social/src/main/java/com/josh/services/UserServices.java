@@ -20,4 +20,6 @@ public interface UserServices {
 	
 	public List<User> searchUser(String query);
 	
+	public User findUserByJwt(String jwt);
+	
 }

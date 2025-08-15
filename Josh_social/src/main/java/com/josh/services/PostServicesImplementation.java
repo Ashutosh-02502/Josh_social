@@ -26,9 +26,6 @@ public class PostServicesImplementation implements PostServices {
 
 	@Override
 	public Post createNewPost(Post post, Integer userId) throws Exception {
-
-		 System.out.println("Received userId: " + userId);
-
 		    Post newPost = new Post();
 
 		    User user = userServices.findUserById(userId);
@@ -101,8 +98,9 @@ public class PostServicesImplementation implements PostServices {
 		
 		if(post.getLiked().contains(user)) post.getLiked().remove(user);
 		else post.getLiked().add(user);
+		postRepository.save(post);
 		
-		return postRepository.save(post);
+		return post;
 	}
 	
 	

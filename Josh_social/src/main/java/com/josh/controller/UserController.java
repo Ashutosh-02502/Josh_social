@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,10 +47,12 @@ public class UserController {
 	}
 	
 	//UPDATE-USER-WITH-ID
-	@PutMapping("/updateuser/{userid}")
-	public User updateUserById(@RequestBody User user, @PathVariable("userid") Integer id) throws Exception {
+	@PutMapping("/api/updateuser")
+	public User updateUserById(@RequestBody User user, @RequestHeader("Authorization") String jwt) throws Exception {
 		
-		User savedUser = userServices.updateUser(user,id);
+		User reqUser = userServices.findUserByJwt(jwt);
+		
+		User savedUser = userServices.updateUser(user,reqUser.getId());
 		return savedUser;
 	}
 	
@@ -65,10 +68,12 @@ public class UserController {
 //	}
 //	
 	
-	@PutMapping("/users/follow/{userId1}/{userId2}")
-	public User followUserHandler(@PathVariable Integer userId1,@PathVariable Integer userId2) throws Exception {
+	@PutMapping("/users/follow/{userId2}")
+	public User followUserHandler(@RequestHeader("Authorization") String jwt,@PathVariable Integer userId2) throws Exception {
 		
-		User user = userServices.followUser(userId1, userId2);
+		User reqUser = userServices.findUserByJwt(jwt);
+		
+		User user = userServices.followUser(reqUser.getId(), userId2);
 		
 		return user;
 	}
@@ -88,4 +93,13 @@ public class UserController {
 		return users;
 	}
 	
+	@GetMapping("/api/user/profile")
+	public User getUserFromToken(@RequestHeader("Authorization") String jwt) {
+		
+		User user = userServices.findUserByJwt(jwt);
+		
+		user.setPassword(null);
+		
+		return user;
+	}
 }
