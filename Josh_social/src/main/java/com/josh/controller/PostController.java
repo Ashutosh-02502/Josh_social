@@ -60,15 +60,17 @@ public class PostController {
 	}
 	
 	
-	@GetMapping("/posts/user/{userId}")
-	public ResponseEntity<List<Post>> findUsersPost(@PathVariable Integer userId) throws Exception{
+	@GetMapping("/api/posts/user/{userId}")
+	public ResponseEntity<List<Post>> findUsersPost(@PathVariable Integer userId,@RequestHeader("Authorization") String jwt) throws Exception{
 		
-		List<Post> posts = postServices.findPostByUserId(userId);
+		User user = userServices.findUserByJwt(jwt);
+		
+		List<Post> posts = postServices.findPostByUserId(user.getId());
 		
 		return new ResponseEntity<List<Post>>(posts,HttpStatus.OK);
 	}
 	
-	@GetMapping("/posts")
+	@GetMapping("/api/posts")
 	public ResponseEntity<List<Post>> findAllPosts() {
 		
 		List<Post> posts = postServices.findAllPost();

@@ -45,7 +45,7 @@ public class AuthController {
 		if(user.getLastname()!=null) user1.setLastname(user.getLastname());
 		if(user.getEmail()!=null) user1.setEmail(user.getEmail());
 		if(user.getPassword()!=null) user1.setPassword(passwordEncoder.encode(user.getPassword()));
- 		
+ 		if(user.getGender()!=null) user1.setGender(user.getGender());
 		
 		User savedUser = userRepository.save(user1);
 		
