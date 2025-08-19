@@ -14,6 +14,7 @@ import com.josh.repository.StoryRepository;
 @Service
 public class StoryServicesImplementation implements StoryServices {
 
+	
 	@Autowired
 	private StoryRepository storyRepository;
 	
